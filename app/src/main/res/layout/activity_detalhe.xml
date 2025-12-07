@@ -1,0 +1,205 @@
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/fundo">
+
+    <!-- Outer container -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/outerDiv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        app:cardBackgroundColor="#FFC74E"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="8dp"
+        app:contentPadding="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="53dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <!-- Inner div 1 -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/div1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardBackgroundColor="#FFEFCD"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="6dp"
+                app:contentPadding="0dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/nomeHabito"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/kdam_thmor_pro"
+                    android:gravity="center"
+                    android:padding="0dp"
+                    android:text="Fumar"
+                    android:textSize="24sp" />
+            </androidx.cardview.widget.CardView>
+
+            <!-- Inner div 2 -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/div2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:cardBackgroundColor="#FFEFCD"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="6dp"
+                app:contentPadding="12dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/div1">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/textViewProgresso"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/kdam_thmor_pro"
+                        android:gravity="start"
+                        android:text="Progresso"
+                        android:textAlignment="center"
+                        android:textSize="20sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <FrameLayout
+                        android:id="@+id/frameProgress"
+                        android:layout_width="0dp"
+                        android:layout_height="28dp"
+                        android:layout_marginTop="8dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/textViewProgresso">
+
+                        <ProgressBar
+                            android:id="@+id/detalheProgress"
+                            style="?android:attr/progressBarStyleHorizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:progress="50"
+                            android:progressDrawable="@drawable/progress_custom" />
+
+                        <TextView
+                            android:id="@+id/textViewPercent"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:text="15/30"
+                            android:textColor="#000000"
+                            android:textStyle="bold" />
+                    </FrameLayout>
+
+                    <TextView
+                        android:id="@+id/textViewDescricao"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:gravity="start"
+                        android:text="{pet_name} está com {current_days}. Ele evoluirá em {lasting_days}."
+                        android:textAlignment="center"
+                        android:textSize="20sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/frameProgress" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <Button
+                android:id="@+id/buttonReiniciar"
+                android:layout_width="260dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="28dp"
+                android:background="@drawable/botao_reiniciar"
+                android:fontFamily="@font/kdam_thmor_pro"
+                android:text="Reiniciar Contagem"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                app:backgroundTint="@null"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/div2" />
+
+            <ImageButton
+                android:id="@+id/buttonExluir"
+                android:layout_width="60dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="28dp"
+                android:background="@drawable/botao_lixo"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/buttonReiniciar"
+                app:layout_constraintTop_toBottomOf="@+id/div2"
+                app:srcCompat="@drawable/icone_lixo" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/div3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:cardBackgroundColor="#FFC74E"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="6dp"
+                app:contentPadding="12dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/buttonReiniciar">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/textViewNomePet"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/nome_pet"
+                        android:fontFamily="@font/kdam_thmor_pro"
+                        android:padding="5dp"
+                        android:text="Jucelino"
+                        android:textAlignment="center"
+                        android:textSize="20sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.0" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <ImageView
+        android:id="@+id/gifDetalhado"
+        android:layout_width="280dp"
+        android:layout_height="364dp"
+        android:layout_marginTop="28dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/outerDiv"
+        app:srcCompat="@drawable/e938d18fc07a3ffd16b4864ef2f1308f" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
