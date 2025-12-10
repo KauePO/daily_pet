@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.widget.Button
+import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.ProgressBar
@@ -30,12 +31,13 @@ class ActivityDetalhe : AppCompatActivity() {
     lateinit var id_habito : String
     lateinit var nome_do_pet : String
 
-    lateinit var text_view_nome_habito : TextView
+    lateinit var text_view_nome_habito : EditText
     lateinit var detalhe_progress : ProgressBar
     lateinit var text_progress : TextView
     lateinit var descricao_detalhe : String
     lateinit var text_view_descricao : TextView
     lateinit var text_view_nome_pet : TextView
+    lateinit var salvar_nome_habito : ImageButton
     lateinit var gif : ImageView
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -65,6 +67,7 @@ class ActivityDetalhe : AppCompatActivity() {
         gif  = findViewById<ImageView>(R.id.gifDetalhado)
         descricao_detalhe = ""
         botao_editar_pet = findViewById(R.id.btnEditarNomePet)
+        salvar_nome_habito = findViewById(R.id.btnSalvarNomeHabito)
 
         val cursor = myDB.getById("habitos", id_habito)
         val botao_reiniciar = findViewById<Button>(R.id.buttonReiniciar)
@@ -104,6 +107,12 @@ class ActivityDetalhe : AppCompatActivity() {
             this.startActivity(intent)
         }
 
+        salvar_nome_habito.setOnClickListener {
+            val novo_nome = text_view_nome_habito.text.toString()
+            myDB.updateOne("habitos", id_habito, "nome",novo_nome)
+            Toast.makeText(this, "Nome do hábito alterado", Toast.LENGTH_SHORT).show()
+        }
+
     }
 
     override fun onResume() {
@@ -126,7 +135,7 @@ class ActivityDetalhe : AppCompatActivity() {
             }
         }
 
-        text_view_nome_habito.text = nome_habito_value
+        text_view_nome_habito.setText(nome_habito_value)
         println(streak)
         detalhe_progress.progress = ((streak.toFloat()/objetivo)*100).toInt()
         text_progress.text = "$streak/$objetivo"
