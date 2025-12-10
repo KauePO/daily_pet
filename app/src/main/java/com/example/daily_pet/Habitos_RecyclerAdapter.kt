@@ -10,7 +10,6 @@ import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.annotation.RequiresApi
-import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.daily_pet.ActivityDetalhe
@@ -53,7 +52,7 @@ class Habitos_RecyclerAdapter(
 
             if (dias.toInt() >= objetivo){
                 objetivo = (objetivo.toInt() + 30)
-                db.updateHabito("habitos", id,"objetivo", objetivo.toString())
+                db.updateOne("habitos", id,"objetivo", objetivo.toString())
             }
 
 
@@ -65,13 +64,13 @@ class Habitos_RecyclerAdapter(
 
             holder.botaoReiniciar.setOnClickListener {
 
-                db.updateHabito("habitos", id.toString(), "dias_streak", "0")
-                db.updateHabito("habitos", id.toString(), "data_criacao", agora)
-                db.updateHabito("habitos", id.toString(), "objetivo", "30")
-                swapCursor(db.getAllHabitos("habitos")) // atualiza RecyclerView
+                db.updateOne("habitos", id.toString(), "dias_streak", "0")
+                db.updateOne("habitos", id.toString(), "data_criacao", agora)
+                db.updateOne("habitos", id.toString(), "objetivo", "30")
+                swapCursor(db.getAll("habitos")) // atualiza RecyclerView
             }
-            val pet = db.getHabitoById("pets",pet_id)
-
+            val pet = db.getById("pets",pet_id)
+            val nome_do_pet = pet?.getString(pet.getColumnIndexOrThrow("nome_pet"))
 
             Glide.with(context)
                 .asGif()
@@ -88,6 +87,7 @@ class Habitos_RecyclerAdapter(
             holder.gif.setOnClickListener {
                 val intent = Intent(context, ActivityDetalhe::class.java)
                 intent.putExtra("idHabito",id)
+                intent.putExtra("nome_do_pet",nome_do_pet)
                 context.startActivity(intent)
             }
         }

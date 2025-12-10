@@ -28,6 +28,7 @@ class ActivityDetalhe : AppCompatActivity() {
     var objetivo = 0
     lateinit var pet_id : String
     lateinit var id_habito : String
+    lateinit var nome_do_pet : String
 
     lateinit var text_view_nome_habito : TextView
     lateinit var detalhe_progress : ProgressBar
@@ -60,11 +61,12 @@ class ActivityDetalhe : AppCompatActivity() {
         streak = ""
         nome_pet_value = ""
         pet_id = ""
+        nome_do_pet = ""
         gif  = findViewById<ImageView>(R.id.gifDetalhado)
         descricao_detalhe = ""
         botao_editar_pet = findViewById(R.id.btnEditarNomePet)
 
-        val cursor = myDB.getHabitoById("habitos", id_habito)
+        val cursor = myDB.getById("habitos", id_habito)
         val botao_reiniciar = findViewById<Button>(R.id.buttonReiniciar)
         val botao_excluir = findViewById<ImageButton>(R.id.buttonExluir)
         val intent = Intent(this, ActivityColecao::class.java)
@@ -74,23 +76,23 @@ class ActivityDetalhe : AppCompatActivity() {
 
         botao_reiniciar.setOnClickListener {
             val agora = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"))
-            myDB.updateHabito("habitos",id_habito.toString(), "dias_streak", "0")
-            myDB.updateHabito("habitos", id_habito.toString(), "data_criacao", agora)
-            myDB.updateHabito("habitos", id_habito.toString(), "objetivo", "30")
+            myDB.updateOne("habitos",id_habito.toString(), "dias_streak", "0")
+            myDB.updateOne("habitos", id_habito.toString(), "data_criacao", agora)
+            myDB.updateOne("habitos", id_habito.toString(), "objetivo", "30")
 
             detalhe_progress.progress = 0
             text_progress.text = "0/30"
-            text_view_descricao.text = "$nome_habito_value está com 0. Ele evoluirá em 30 dias."
+            text_view_descricao.text = "$nome_pet_value está com 0. Ele evoluirá em 30 dias."
 
             Glide.with(this)
                 .asGif()
-                .load(R.drawable.notgodzillastage1)
+                .load(this.resources.getIdentifier(nome_do_pet + "stage1", "drawable", this.packageName))
                 .into(gif)
         }
 
         botao_excluir.setOnClickListener {
             // Delete row from DB
-            myDB.deleteHabito("habitos", id_habito.toString())
+            myDB.deleteOne("habitos", id_habito.toString())
             this.finish()
         }
 
@@ -111,7 +113,7 @@ class ActivityDetalhe : AppCompatActivity() {
     }
 
     fun carregarDadosDoHabito(){
-        myDB.getHabitoById("habitos",id_habito)?.use { cursor ->
+        myDB.getById("habitos",id_habito)?.use { cursor ->
             if (cursor.moveToFirst()) {
                 nome_habito_value = cursor.getString(cursor.getColumnIndexOrThrow("nome"))
                 streak = cursor.getString(cursor.getColumnIndexOrThrow("dias_streak"))
@@ -143,16 +145,17 @@ class ActivityDetalhe : AppCompatActivity() {
         text_view_descricao.text = descricao_detalhe
         text_view_nome_pet.text = nome_pet_value
 
-        val pet = myDB.getHabitoById("pets",pet_id)
+        val pet = myDB.getById("pets",pet_id)
+        nome_do_pet = pet?.getString(pet.getColumnIndexOrThrow("nome_pet")).toString()
 
         Glide.with(this)
             .asGif()
             .load(
                 when(objetivo){
-                    30 -> this.resources.getIdentifier(pet?.getString(pet.getColumnIndexOrThrow("nome_pet")) + "stage1", "drawable", this.packageName)
-                    60 -> this.resources.getIdentifier(pet?.getString(pet.getColumnIndexOrThrow("nome_pet")) + "stage2", "drawable", this.packageName)
-                    90 -> this.resources.getIdentifier(pet?.getString(pet.getColumnIndexOrThrow("nome_pet")) + "stage3", "drawable", this.packageName)
-                    else -> this.resources.getIdentifier(pet?.getString(pet.getColumnIndexOrThrow("nome_pet")) + "stage3", "drawable", this.packageName)
+                    30 -> this.resources.getIdentifier( nome_do_pet + "stage1", "drawable", this.packageName)
+                    60 -> this.resources.getIdentifier(nome_do_pet + "stage2", "drawable", this.packageName)
+                    90 -> this.resources.getIdentifier(nome_do_pet + "stage3", "drawable", this.packageName)
+                    else -> this.resources.getIdentifier(nome_do_pet + "stage3", "drawable", this.packageName)
                 }
             )
             .into(gif)

@@ -75,12 +75,12 @@ class DatabaseHelper private constructor(context: Context) :
         return insertData(table, data.toContentValues())
     }
 
-    fun getAllHabitos(table: String): Cursor {
+    fun getAll(table: String): Cursor {
         val db = readableDatabase
         return db.query(table, null, null, null, null, null, null)
     }
 
-    fun getHabitoById(table: String, id: String?): Cursor? {
+    fun getById(table: String, id: String?): Cursor? {
         val db = readableDatabase
         return db.query(
             table,
@@ -95,7 +95,7 @@ class DatabaseHelper private constructor(context: Context) :
         }
     }
 
-    fun updateHabito(table: String, id: String, campo: String, valor: Any?): Boolean {
+    fun updateOne(table: String, id: String, campo: String, valor: Any?): Boolean {
         val db = writableDatabase
         val values = ContentValues().apply {
             put(campo, valor as? String) // adjust type as needed or use extension
@@ -105,7 +105,7 @@ class DatabaseHelper private constructor(context: Context) :
     }
 
 
-    fun deleteHabito(table: String, id: String): Boolean {
+    fun deleteOne(table: String, id: String): Boolean {
         val db = writableDatabase
         val deletedRows = db.delete(table, "id = ?", arrayOf(id))
         return deletedRows > 0

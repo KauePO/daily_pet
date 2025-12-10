@@ -1,6 +1,5 @@
 package com.example.daily_pet
 
-import Habitos_RecyclerAdapter
 import android.database.Cursor
 import android.os.Bundle
 import android.widget.EditText
@@ -45,7 +44,7 @@ class ActivityColecao : AppCompatActivity() {
 
         myDB = DatabaseHelper.getInstance(this);
 
-        cursor = myDB.getAllHabitos("pets");
+        cursor = myDB.getAll("pets");
 
         adapter = Pets_RecyclerAdapter(this, cursor, objetivo, id_habito.toString(), myDB);
 
@@ -55,7 +54,7 @@ class ActivityColecao : AppCompatActivity() {
 
 
         botao_editar_nome_pet.setOnClickListener {
-            myDB.updateHabito("habitos", id_habito.toString(), "nome_pet", campo_nome.text.toString())
+            myDB.updateOne("habitos", id_habito.toString(), "nome_pet", campo_nome.text.toString())
 
             setResult(RESULT_OK)
             Toast.makeText(this,"Nome trocado com sucesso", Toast.LENGTH_SHORT).show()

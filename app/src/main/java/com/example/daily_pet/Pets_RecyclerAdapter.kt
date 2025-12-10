@@ -6,9 +6,7 @@ import android.database.Cursor
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
 import android.widget.ImageView
-import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
@@ -62,7 +60,7 @@ class Pets_RecyclerAdapter (
                     Toast.makeText(context,"Você ainda não atingiu os dias necessários", Toast.LENGTH_SHORT).show()
                     return@setOnClickListener
                 }
-                db.updateHabito("habitos", habito_id.toString(), "pet_id", pet_id)
+                db.updateOne("habitos", habito_id.toString(), "pet_id", pet_id)
                 Toast.makeText(context,"Pet trocado com sucesso", Toast.LENGTH_SHORT).show()
                 (context as ActivityColecao).setResult(RESULT_OK)
             }
